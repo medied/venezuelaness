@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -12,7 +10,6 @@
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
-
   </head>
 
   <body>
@@ -30,7 +27,7 @@
             <div class="mySlides">
               <img class="img-cedula" src="images/severus_snape.jpg" alt="cedula">
               <div class="text">Sigue estos pasos para escanear tu cedula de identidad a tu telefono.</div>
-              </br>
+              <br>
               <div class="text">Con tu cedula digital puedes acceder a servicios en linea que operan con criptomonedas.</div>
             </div>
 
@@ -41,18 +38,68 @@
             </div>
 
             <div class="mySlides">
-              <div class="text">Abre la app de uPort y registrate usando tu <b>nombre completo</b>, tal como aparece en tu cedula laminada.</div>
+              <div class="text">
+                Abre la app de uPort y registrate usando tu <b>nombre completo</b>, 
+                tal como aparece en tu cedula laminada.
+              </div>
               <img class="img-uport" src="images/uport-placeholder.png" alt="uport">
               <div class="text">Vuelve a esta pagina luego de la pantalla morada.</div>
             </div>
             
             <div class="mySlides">
               <div class="text">Ahora le pediremos permiso a tu app de uPort para acceder a tu nombre. No compartiremos tus datos y fotos con ninguna empresa ni gobierno</div>
-              </br>
+              <br>
               <div class="text"><b>Recuerda volver a esta pagina despues de darnos permisos.</b></div>
               <button type="button" class="btn btn-primary buttons-row" onclick="connectWithUport()">
                 Conecta con uPort
               </button>
+            </div>
+
+            <div class="mySlides">
+              <div class="text">
+                Sube una foto de tu cédula laminada.
+                Toma la foto con buena luz y
+                asegúrate de que se pueda leer bien,
+                de lo contrario no podremos verificar
+                tu identidad.
+              </div>
+              <label class="btn btn-secondary buttons-row">
+                Subir foto <input type="file" accept="image/*" capture id="cedula-input" hidden>
+              </label>
+            </div>
+            <div class="mySlides">
+              <div class="text">
+                Anota esta frase en un papel:
+                <br>
+                <br>
+                <b>arruga famoso madera</b>
+                <br>
+                <br>
+                Y tómate un selfie con él. 
+                Asegúrate de que el papel sea legible 
+                y tu cara esté iluminada.
+                Este paso es necesario para confirmar
+                que eres el titular de la cédula.
+              </div>
+              <label class="btn btn-secondary buttons-row">
+                Subir foto <input type="file" accept="image/*" capture id="string-input" hidden>
+              </label>
+            </div>
+            <div class="mySlides">
+              <div class="text">
+                ¡Listo!
+                <br>
+                <br>
+                Estamos procesando tu
+                cédula digital. Te enviaremos una
+                notificación a uPort cuando
+                hayamos verificado tu identidad.
+                <br>
+                <br>
+                En tuceduladigital.com
+                encontrarás una lista de servicios donde 
+                puedes utilizar tu cédula digital.
+              </div>
             </div>
           </div>
         </div>
@@ -60,10 +107,13 @@
       <div class="row buttons-row">
           <div class="col-lg-12 text-center">
             <div class="dot-row">
-              <span class="dot" onclick="currentSlide(1)"></span> 
-              <span class="dot" onclick="currentSlide(2)"></span> 
-              <span class="dot" onclick="currentSlide(3)"></span> 
-              <span class="dot" onclick="currentSlide(4)"></span> 
+              <span class="dot" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
+              <span class="dot" onclick="currentSlide(3)"></span>
+              <span class="dot" onclick="currentSlide(4)"></span>
+              <span class="dot" onclick="currentSlide(5)"></span>
+              <span class="dot" onclick="currentSlide(6)"></span>
+              <span class="dot" onclick="currentSlide(7)"></span>
             </div>
             <div class="d-flex justify-content-around">
               <button type="button" class="btn btn-secondary" onclick="plusSlides(-1)">
@@ -77,7 +127,6 @@
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>

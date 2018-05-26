@@ -27,11 +27,14 @@ body {
   margin-top: 15px;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .dot-row {
   margin-bottom: 10px;
 }
 
-/* The dots/bullets/indicators */
 .dot {
   cursor: pointer;
   height: 15px;
