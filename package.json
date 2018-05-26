@@ -1,8 +1,9 @@
 {
-    "title": "Bare",
-    "name": "startbootstrap-bare",
+    "title": "venezuelaness",
+    "name": "cedula-digital",
     "version": "4.1.1",
-    "description": "A basic HTML starter template for Bootstrap",
+    "description": "kick the dictator out",
+    "main": "app.js",
     "keywords": [
         "css",
         "sass",
@@ -11,26 +12,13 @@
         "theme",
         "template"
     ],
-    "homepage": "https://startbootstrap.com/template-overviews/bare",
-    "bugs": {
-        "url": "https://github.com/BlackrockDigital/startbootstrap-bare/issues",
-        "email": "feedback@startbootstrap.com"
-    },
-    "license": "MIT",
-    "author": "Start Bootstrap",
-    "contributors": [
-        "David Miller (http://davidmiller.io/)"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/BlackrockDigital/startbootstrap-bare.git"
-    },
     "dependencies": {
         "bootstrap": "4.1.1",
+        "express": "^4.16.3",
         "jquery": "3.3.1",
+        "jsdom": "^11.11.0",
         "qrcode-terminal": "^0.12.0",
-        "uport-connect": "^0.7.3",
-        "jsdom": "^11.11.0"
+        "uport-connect": "^0.7.3"
     },
     "devDependencies": {
         "browser-sync": "2.24.3",
