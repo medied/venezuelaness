@@ -10,6 +10,10 @@ const userSchema = mongoose.Schema({
         required: true,
         unique: true
     },
+    verified: {
+        type: Boolean,
+        required: true
+    }
 })
 
 const User = mongoose.model('User', userSchema)
