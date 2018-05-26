@@ -11,7 +11,8 @@ function CreateUser(uportCredentials, callback) {
     }
     const user = new models.User({
         uportName: name,
-        uportAddress: address
+        uportAddress: address,
+        verified: false
     });
     user.save(callback);
 }
