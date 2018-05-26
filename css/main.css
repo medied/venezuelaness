@@ -10,6 +10,27 @@ body {
   height: 350px;
 }
 
+.img-cedula {
+  width: 200px;
+  margin-bottom: 15px;
+}
+
+.img-googleplay {
+  width: 150px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.img-uport {
+  width: 290px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.dot-row {
+  margin-bottom: 10px;
+}
+
 /* The dots/bullets/indicators */
 .dot {
   cursor: pointer;
