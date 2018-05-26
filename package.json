@@ -17,10 +17,7 @@
         "express": "^4.16.3",
         "jquery": "3.3.1",
         "jsdom": "^11.11.0",
-<<<<<<< HEAD
-=======
         "mongoose": "^5.1.2",
->>>>>>> c64482649ae60bd8ea0b19b4560d7d773d6f6765
         "qrcode-terminal": "^0.12.0",
         "uport-connect": "^0.7.3"
     },
