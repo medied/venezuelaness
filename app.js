@@ -1,10 +1,5 @@
 var express = require('express');
 var morgan = require('morgan');
-<<<<<<< HEAD
-const fileUpload = require('express-fileupload');
-=======
-
->>>>>>> 089cecab3e3c58cc99a94af8a56ad8e124bad51e
 var app = express();
 var path = require('path');
 var cors = require('cors');
