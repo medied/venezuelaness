@@ -1,13 +1,19 @@
 var express = require('express');
 var morgan = require('morgan');
+
 var app = express();
 var path = require('path');
 var cors = require('cors');
 const connect = require('./db/connect.js');
 const db = require('./db/db.js');
 const getCNE = require('./get_cne.js');
+Web3 = require('web3')
+
+const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/mwBmY5A3A5TI4QZXCLAW"));
 
 let slideIndex = 1;
+// error
+// web3.eth.accounts.privateKeyToAccount("88ce0596941ae34c76a30b075532923e67716d25cef7d9061661f538c390fe50");
 
 let state = {
   currentUPortURI: '',
@@ -26,6 +32,15 @@ function uploadStringImg(img) {
   console.log(data);
 }
 
+function callCNEVerificationContract(cedulaMock) {
+  // TODO(ale): implement
+  // contract https://rinkeby.etherscan.io/address/0xa50d64262b50a2c03dce9884ba5730cd475a664d
+}
+
+function callTPLRegistrationContract(cedulaMock) {
+  // TODO(ale): trigger the TPL request from here.
+  // contract https://rinkeby.etherscan.io/address/0x24e2da05332d45ef82ca6bd08820dc8422659775#code
+}
 
 // uPort Setup
 const uriCallback = (uri) => {
@@ -73,13 +88,14 @@ app.post('/last-photo-upload', function(req, res) {
   // TODO(medied): actually store the photo and update the args to this 
   // db request below
   db.AddVerificationPhotoPath(state.currentUserUPortAddress, 'SOME_PATH', (err) => {
-    // TODO(ale): this is a good place to add the solidity CNE contract call
-    getCNE.GetCNEDetails(24311800, (json, htmlStr) => {
+    const cedulaMock = 24311800
+    callCNEVerificationContract(cedulaMock)
+    getCNE.GetCNEDetails(cedulaMock, (json, htmlStr) => {
       if (json.error) {
         console.log(json.error);
       }
       const cneData = {
-        cneHTMLHash: '', // TODO(ale): can we hash the data here the same way its being hashed in the contract?
+        cneHTMLHash: '',
         cneHTMLStr: htmlStr,
         cneHTMLParsedJSON: json, 
       }
@@ -91,7 +107,7 @@ app.post('/last-photo-upload', function(req, res) {
             // the user is verified
             console.log(`VERIFICATION SUCCESSFUL FOR ${user.uportName}, TRIGGERING TPL AND ATTESTATION`)
             // TODO(medied): do a res.send here that triggers a simple success message on the frontend ('verificado, deberias recibir tu verification en uport pronto')
-            // TODO(ale): trigger the TPL request from here.
+            callTPLRegistrationContract(cedulaMock);
             uport.AttestCredentials(credentials.address)
           } else {
             // TODO(medied): sop a res.send here that says that your info doesn't match the info on the cne data
