@@ -1,9 +1,9 @@
 let slideIndex = 1;
 showSlides(slideIndex);
 
-const cedulaInput = document.getElementById('cedula-input');
+// const cedulaInput = document.getElementById('cedula-input');
 const stringInput = document.getElementById('string-input');
-cedulaInput.addEventListener('change', (e) => uploadCedulaImg(e.target.files));
+// cedulaInput.addEventListener('change', (e) => uploadCedulaImg(e.target.files));
 stringInput.addEventListener('change', (e) => uploadStringImg(e.target.files));
 
 function plusSlides(n) {
@@ -32,6 +32,26 @@ function showSlides(n) {
 
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
+}
+
+// function uploadCedulaImg(img) {
+//   console.log("uploadCedulaImg() invoked");
+//   console.log(img);
+//   $.ajax({
+//     type: "POST",
+//     url: '/upload',
+//     data: img,
+//     success: function () {
+//       console.log('success');
+//     },
+//     dataType: dataType
+//   });
+// }
+
+function uploadStringImg(img) {
+  console.log("uploadStringImg() invoked");
+  data.stringImg = img;
+  console.log(data);
 }
 
 function connectWithUport() {
