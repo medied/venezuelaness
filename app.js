@@ -5,6 +5,7 @@ var path = require('path');
 var cors = require('cors');
 const connect = require('./db/connect.js');
 const db = require('./db/db.js');
+const getCNE = require('./get_cne.js');
 
 let slideIndex = 1;
 
@@ -57,11 +58,47 @@ app.get('/uport-app-link', function(req, res){
   // Refresh the state.currentUportURI
   // (this is very hacky)
   uport.RequestCredentials((credentials) => {
+    state.currentUserUPortAddress = credentials.address
+    console.log(`SET currentUserUPortAddress to ${credentials.address}`)
     console.log('RECEIVED CREDENTIALS: ', JSON.stringify(credentials, null, 2));
     db.CreateUser(credentials, (err) => {
-      uport.AttestCredentials(credentials.address)
       console.log(`write completed ${err}`)
     });
     
   });
+});
+
+// This is the request that marks the point where the user submitted all his data
+app.post('/last-photo-upload', function(req, res) {
+  // TODO(medied): actually store the photo and update the args to this 
+  // db request below
+  db.AddVerificationPhotoPath(state.currentUserUPortAddress, 'SOME_PATH', (err) => {
+    // TODO(ale): this is a good place to add the solidity CNE contract call
+    getCNE.GetCNEDetails(24311800, (json, htmlStr) => {
+      if (json.error) {
+        console.log(json.error);
+      }
+      const cneData = {
+        cneHTMLHash: '', // TODO(ale): can we hash the data here the same way its being hashed in the contract?
+        cneHTMLStr: htmlStr,
+        cneHTMLParsedJSON: json, 
+      }
+      db.AddCNEData(state.currentUserUPortAddress, cneData, (err, user) => {
+        console.log(`AddCNEData with ${err} and ${user}`)
+        if (!err && user) {
+          // Verify that the persons uPort name matches the cneData name
+          if (user.uportName === user.cneHTMLParsedJSON.nombre) {
+            // the user is verified
+            console.log(`VERIFICATION SUCCESSFUL FOR ${user.uportName}, TRIGGERING TPL AND ATTESTATION`)
+            // TODO(medied): do a res.send here that triggers a simple success message on the frontend ('verificado, deberias recibir tu verification en uport pronto')
+            // TODO(ale): trigger the TPL request from here.
+            uport.AttestCredentials(credentials.address)
+          } else {
+            // TODO(medied): sop a res.send here that says that your info doesn't match the info on the cne data
+            console.log(`WASNT ABLE TO MATCH ${user.uportName} with ${user.cneHTMLParsedJSON.nombre}`)
+          }
+        }
+      });
+    })
+  })
 });

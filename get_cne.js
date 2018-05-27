@@ -69,7 +69,7 @@ function GetCNEDetails(cedula, callback) {
                     
                 }
             });
-            callback(json)
+            callback(json, htmlStr)
         });
     })
 }
@@ -138,3 +138,6 @@ function getCNEData(cedula, callback) {
 //     console.log('RESULT', json.err, JSON.stringify(json, null, 2))
 // })
 
+module.exports = {
+    GetCNEDetails: GetCNEDetails
+}

@@ -49,6 +49,7 @@ function AddCNEData(uPortAddress, cneData, callback) {
         user.cneHTMLHash = cneData.cneHTMLHash;
         user.cneHTMLParsedJSON = cneData.cneHTMLParsedJSON;
         user.save(callback);
+        callback(null, user);
     })
 }
 
