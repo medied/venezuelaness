@@ -1,5 +1,6 @@
 var express = require('express');
 var morgan = require('morgan');
+const fileUpload = require('express-fileupload');
 var app = express();
 var path = require('path');
 var cors = require('cors');
@@ -34,7 +35,7 @@ const uriCallback = (uri) => {
 const uport = require('./uport/uport.js').New(uriCallback)
 
 // Express Setup
-const PORT = 80;
+const PORT = 8080;
 // allow redirects
 app.use(cors({origin: `http://localhost:${PORT}`}));
 
@@ -42,6 +43,7 @@ app.use(cors({origin: `http://localhost:${PORT}`}));
 app.use(morgan('combined'));
 // serve public dir
 app.use(express.static('public'))
+app.use(fileUpload());
 
 // Mongo Setup + Server startup
 connect(() => {
@@ -68,9 +70,20 @@ app.get('/uport-app-link', function(req, res){
   });
 });
 
+// app.post
+
 // This is the request that marks the point where the user submitted all his data
 app.post('/last-photo-upload', function(req, res) {
-  // TODO(medied): actually store the photo and update the args to this 
+  if (!req.files)
+    return res.status(400).send('No files were uploaded.');
+
+  let cedulaImg = req.files.cedulaImg;
+  cedulaImg.mv(__dirname + './public/images/' + cedulaImg.name + '.jpg', function(err) {
+    if (err)
+      return res.status(500).send(err);
+    res.send('<html><h1 style>¡Listo! Estamos procesando tu cédula digital. Te enviaremos una notificación a uPort cuando hayamos verificado tu identidad</h1></html>');
+    res.end();
+  });
   // db request below
   db.AddVerificationPhotoPath(state.currentUserUPortAddress, 'SOME_PATH', (err) => {
     // TODO(ale): this is a good place to add the solidity CNE contract call
