@@ -8,6 +8,7 @@ const db = require('./db/db.js');
 const getCNE = require('./get_cne.js');
 const Web3 = require('web3')
 const GetBip39 = require('./bip39_wordgen.js');
+const fileUpload = require('express-fileupload')
 
 const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/mwBmY5A3A5TI4QZXCLAW"));
 
@@ -72,11 +73,10 @@ app.get('/uport-app-link', function(req, res){
     res.send(state.currentUportURI)
   }, 1000)
   // Refresh the state.currentUportURI
-  // (this is very hacky)
   uport.RequestCredentials((credentials) => {
     state.currentUserUPortAddress = credentials.address
     const bip39 = GetBip39();
-    console.log(`SET currentUserUPortAddress to ${credentials.address}`)
+    console.log(`currentUserUPortAddress ${credentials.address}`)
     console.log('RECEIVED CREDENTIALS: ', JSON.stringify(credentials, null, 2));
     db.CreateUser(credentials, bip39, (err) => {
       console.log(`write completed ${err}`)
@@ -89,17 +89,16 @@ app.get('/uport-app-link', function(req, res){
 
 // This is the request that marks the point where the user submitted all his data
 app.post('/last-photo-upload', function(req, res) {
-  if (!req.files)
-    return res.status(400).send('No files were uploaded.');
+  // if (!req.files)
+  //   return res.status(400).send('No files were uploaded.');
 
-  let cedulaImg = req.files.cedulaImg;
-  cedulaImg.mv(__dirname + './public/images/' + cedulaImg.name + '.jpg', function(err) {
-    if (err)
-      return res.status(500).send(err);
-    res.send('<html><h1 style>¡Listo! Estamos procesando tu cédula digital. Te enviaremos una notificación a uPort cuando hayamos verificado tu identidad</h1></html>');
-    res.end();
-  });
-  // db request below
+  // let cedulaImg = req.files.cedulaImg;
+  // cedulaImg.mv(__dirname + './public/images/' + cedulaImg.name + '.jpg', function(err) {
+  //   if (err)
+  //     return res.status(500).send(err);
+  //   res.send('<html><h1 style>¡Listo! Estamos procesando tu cédula digital. Te enviaremos una notificación a uPort cuando hayamos verificado tu identidad</h1></html>');
+  //   res.end();
+  // });
   db.AddVerificationPhotoPath(state.currentUserUPortAddress, 'SOME_PATH', (err) => {
     const cedulaMock = 24311800
     callCNEVerificationContract(cedulaMock)
@@ -116,7 +115,7 @@ app.post('/last-photo-upload', function(req, res) {
         console.log(`AddCNEData with ${err} and ${user}`)
         if (!err && user) {
           // Verify that the persons uPort name matches the cneData name
-          if (user.uportName === user.cneHTMLParsedJSON.nombre) {
+          if (user.uportName.toLowerCase() === user.cneHTMLParsedJSON.nombre.toLowerCase()) {
             // the user is verified
             console.log(`VERIFICATION SUCCESSFUL FOR ${user.uportName}, TRIGGERING TPL AND ATTESTATION`)
             // TODO(medied): do a res.send here that triggers a simple success message on the frontend ('verificado, deberias recibir tu verification en uport pronto')

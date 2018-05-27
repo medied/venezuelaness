@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>fuck maduro</title>
+    <title>Cedula Digital</title>
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
@@ -25,7 +25,7 @@
         <div class="col-lg-12 text-center">
           <div class="slideshow-container">
             <div class="mySlides">
-              <img class="img-cedula" src="images/severus_snape.jpg" alt="cedula">
+              <img class="img-cedula" src="images/cedula-digital.png" alt="cedula">
               <div class="text">Sigue estos pasos para escanear tu cedula de identidad a tu telefono.</div>
               <br>
               <div class="text">Con tu cedula digital puedes acceder a servicios en linea que operan con criptomonedas.</div>
@@ -89,7 +89,7 @@
                   <input type="file" name="cedulaImg" />
                   <input type='submit' value='Upload!' />
               </form> -->
-              <label class="btn btn-secondary buttons-row">
+              <label class="btn btn-secondary buttons-row" onclick='$.post("last-photo-upload")'>
                 Subir foto <input type="file" accept="image/*" capture id="string-input" hidden>
               </label>
             </div>
