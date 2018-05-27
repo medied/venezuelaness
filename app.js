@@ -85,8 +85,6 @@ app.get('/uport-app-link', function(req, res){
   });
 });
 
-// app.post
-
 // This is the request that marks the point where the user submitted all his data
 app.post('/last-photo-upload', function(req, res) {
   // if (!req.files)
@@ -115,18 +113,24 @@ app.post('/last-photo-upload', function(req, res) {
         console.log(`AddCNEData with ${err} and ${user}`)
         if (!err && user) {
           // Verify that the persons uPort name matches the cneData name
-          if (user.uportName.toLowerCase() === user.cneHTMLParsedJSON.nombre.toLowerCase()) {
+          if (user.uportName.toLowerCase().replaceAll(" ", "") == user.cneHTMLParsedJSON.nombre.toLowerCase().replaceAll(" ", "")) {
             // the user is verified
             console.log(`VERIFICATION SUCCESSFUL FOR ${user.uportName}, TRIGGERING TPL AND ATTESTATION`)
             // TODO(medied): do a res.send here that triggers a simple success message on the frontend ('verificado, deberias recibir tu verification en uport pronto')
             callTPLRegistrationContract(cedulaMock);
-            uport.AttestCredentials(credentials.address)
+            uport.AttestCredentials(state.currentUserUPortAddress)
           } else {
             // TODO(medied): sop a res.send here that says that your info doesn't match the info on the cne data
-            console.log(`WASNT ABLE TO MATCH ${user.uportName} with ${user.cneHTMLParsedJSON.nombre}`)
+            console.log(`WASNT ABLE TO MATCH ${user.uportName.toLowerCase().replaceAll(" ", "")} with ${user.cneHTMLParsedJSON.nombre.toLowerCase().replaceAll(" ", "")}`)
           }
         }
       });
     })
   })
 });
+
+
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+};
