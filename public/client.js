@@ -36,6 +36,7 @@ function showSlides(n) {
 
 function connectWithUport() {
   $.get( "/uport-app-link", function(link) {
-    window.open(link, '_blank')
+    // window.open(link, '_blank')
+    window.location = link
   });
 }

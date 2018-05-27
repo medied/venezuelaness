@@ -32,7 +32,7 @@ const uriCallback = (uri) => {
 const uport = require('./uport/uport.js').New(uriCallback)
 
 // Express Setup
-const PORT = 8080;
+const PORT = 80;
 // allow redirects
 app.use(cors({origin: `http://localhost:${PORT}`}));
 
