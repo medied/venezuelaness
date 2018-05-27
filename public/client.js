@@ -1,4 +1,4 @@
-let slideIndex = 1;
+let slideIndex = 4;
 showSlides(slideIndex);
 
 const cedulaInput = document.getElementById('cedula-input');
