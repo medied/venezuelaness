@@ -5,7 +5,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    uportAddress: { 
+    uportAddress: { // Primary key
         type: String,
         required: true,
         unique: true
@@ -13,7 +13,11 @@ const userSchema = mongoose.Schema({
     verified: {
         type: Boolean,
         required: true
-    }
+    },
+    verificationPhotoPath: String,
+    cneHTMLStr: String,
+    cneHTMLHash: String,
+    cneHTMLParsedJSON: Object,
 })
 
 const User = mongoose.model('User', userSchema)

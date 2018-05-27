@@ -9,7 +9,8 @@ const db = require('./db/db.js');
 let slideIndex = 1;
 
 let state = {
-  currentUPortURI: ''
+  currentUPortURI: '',
+  currentUserUPortAddress: ''
 };
 
 function uploadCedulaImg(img) {
