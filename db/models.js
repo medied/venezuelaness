@@ -18,6 +18,7 @@ const userSchema = mongoose.Schema({
     cneHTMLStr: String,
     cneHTMLHash: String,
     cneHTMLParsedJSON: Object,
+    bip39Phrase: String
 })
 
 const User = mongoose.model('User', userSchema)

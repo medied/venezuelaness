@@ -2,7 +2,7 @@ const models = require('./models.js');
 
 // @arg uportCredentials is the object returned by uport.RequestCredentials
 // @arg callback(err) returns after writing to the db
-function CreateUser(uportCredentials, callback) {
+function CreateUser(uportCredentials, bip39, callback) {
     const name = uportCredentials.name;
     const address = uportCredentials.address;
     if (!name || !address) {
@@ -12,6 +12,7 @@ function CreateUser(uportCredentials, callback) {
     const user = new models.User({
         uportName: name,
         uportAddress: address,
+        bip39Phrase: bip39,
         verified: false
     });
     user.save(callback);

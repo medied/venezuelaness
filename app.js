@@ -6,7 +6,8 @@ var cors = require('cors');
 const connect = require('./db/connect.js');
 const db = require('./db/db.js');
 const getCNE = require('./get_cne.js');
-Web3 = require('web3')
+const Web3 = require('web3')
+const GetBip39 = require('./bip39_wordgen.js');
 
 const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/mwBmY5A3A5TI4QZXCLAW"));
 
@@ -74,9 +75,10 @@ app.get('/uport-app-link', function(req, res){
   // (this is very hacky)
   uport.RequestCredentials((credentials) => {
     state.currentUserUPortAddress = credentials.address
+    const bip39 = GetBip39();
     console.log(`SET currentUserUPortAddress to ${credentials.address}`)
     console.log('RECEIVED CREDENTIALS: ', JSON.stringify(credentials, null, 2));
-    db.CreateUser(credentials, (err) => {
+    db.CreateUser(credentials, bip39, (err) => {
       console.log(`write completed ${err}`)
     });
     
